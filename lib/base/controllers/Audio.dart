@@ -7,6 +7,7 @@ abstract class BaseAudio{
   Future<int> resume();
   Future<int> pause();
   Future<bool> loop();
+  Future<bool> notLoop();
   void moveTimeLine(int time);
   void moveVolume({double volume = 1.0});
   Stream<Duration> durationLine();

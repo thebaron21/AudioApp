@@ -37,4 +37,5 @@ flutter:
 
   assets:
     - assets/1.mp3
+    - assets/
   #   - images/a_dot_ham.jpeg

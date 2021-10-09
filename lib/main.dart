@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'app/views/pages/AudioPage.dart';
 import 'app/views/pages/home.dart';
 
 void main() {
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      home: HomePageView(),
+      home: BodyScaffold(),
     );
   }
 }
