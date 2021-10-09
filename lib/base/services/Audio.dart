@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:audioplayers/web/audioplayers_web.dart';
 import 'package:flutter/cupertino.dart';
 
-enum AudioEvent { PLAY, STOP, RESUME, LOOP, NOTLOOP } //resume
-enum AudioState { Completed, PLAYING, STOPPED }
+enum AudioEvent { PLAY, STOP, RESUME, LOOP, NOTLOOP , PAUSE } //resume
+enum AudioState { Completed, PLAYING, STOPPED , RESUME, PAUSE }
 
 class AudioService extends ChangeNotifier {
   AudioPlayer? _audioPlayer;
@@ -15,6 +16,7 @@ class AudioService extends ChangeNotifier {
 
   AudioService() {
     _audioPlayer = AudioPlayer();
+    AudioPlayer.logEnable =false;
     _audioCache = AudioCache(fixedPlayer: _audioPlayer);
     _audioState = AudioState.STOPPED;
 
@@ -32,13 +34,16 @@ class AudioService extends ChangeNotifier {
         await _audioPlayer!.stop();
         break;
       case AudioEvent.RESUME:
-          await _audioPlayer!.pause();
+          await _audioPlayer!.resume();
         break;
       case AudioEvent.LOOP:
         await _audioPlayer!.setReleaseMode(ReleaseMode.LOOP);
         break;
       case AudioEvent.NOTLOOP:
         await _audioPlayer!.setReleaseMode(ReleaseMode.STOP);
+        break;
+      case AudioEvent.PAUSE:
+        await _audioPlayer!.pause();
         break;
     }
     _durationStream = _audioPlayer!.onDurationChanged;

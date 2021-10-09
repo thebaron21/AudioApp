@@ -1,6 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:test_getx/app/controllers/Audio.dart';
+import 'package:test_getx/app/models/AppDuration.dart';
 import 'package:test_getx/base/services/Audio.dart';
 
 class HomePageView extends StatefulWidget {
@@ -35,9 +36,9 @@ class _HomePageViewState extends State<HomePageView> {
                     stream: _controller.positionStream,
                     builder: (BuildContext context, AsyncSnapshot<Duration> snapshot) {
                       if( snapshot.hasData ){
-                        return Text(" ${snapshot.data!.inSeconds}:${(snapshot.data!.inSeconds/60) } ");
+                        return Text(AppDuration.duration(snapshot.data!));
                       }else{
-                        return Text("21");
+                        return Text("00:00");
                       }
                     },
                   ),
@@ -45,9 +46,9 @@ class _HomePageViewState extends State<HomePageView> {
                     stream: _controller.durationStream,
                     builder: (BuildContext context, AsyncSnapshot<Duration> snapshot) {
                       if( snapshot.hasData ){
-                        return Text(" ${(snapshot.data!.inMinutes)}:${( (snapshot.data!.inSeconds/60) as double )} ");
+                        return Text(AppDuration.duration(snapshot.data!));
                       }else{
-                        return Text("21");
+                        return Text("00:00");
                       }
                     },
                   )
@@ -61,20 +62,26 @@ class _HomePageViewState extends State<HomePageView> {
                   icon: Icons.play_arrow,
                   onTap: () async {
                     await _controller.start("1.mp3");
-                    _controller.audioState = AudioState.PLAYING;
+                    setState(() => _controller.audioState = AudioState.PLAYING);
                   },
                 ),
                 _circleButton(
                   icon: Icons.stop,
                   onTap: () async {
                     await _controller.stop();
-                    _controller.audioState = AudioState.STOPPED;
+                    setState(() => _controller.audioState = AudioState.STOPPED);
                   },
                 ),
                 _circleButton(
                   icon: Icons.pause,
                   onTap: () async {
-                    await _controller.resume();
+                      if( _controller.audioState == AudioState.PLAYING || _controller.audioState == AudioState.RESUME ){
+                        await _controller.pause();
+                        setState( () => _controller.audioState = AudioState.PAUSE );
+                      }else if( _controller.audioState == AudioState.PAUSE ){
+                        await _controller.resume();
+                        setState( () => _controller.audioState = AudioState.RESUME );
+                      }
                   },
                 ),
                 _circleButton(
@@ -108,22 +115,5 @@ class _HomePageViewState extends State<HomePageView> {
         ),
       ),
     );
-  }
-}
-
-class AudioC {
-  AudioPlayer? _audioPlayer;
-  AudioCache? _audioCache;
-  AudioC() {
-    _audioPlayer = AudioPlayer();
-    _audioCache = AudioCache(fixedPlayer: _audioPlayer);
-  }
-
-  play(String file) async {
-    await _audioCache!.play(file);
-  }
-
-  stop() async {
-    await _audioPlayer!.stop();
   }
 }
