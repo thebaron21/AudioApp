@@ -1,9 +1,10 @@
 import 'dart:async';
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:meta/meta.dart' as e;
 
-enum AudioEvent { PLAY, STOP, RESUME, LOOP, NOTLOOP , PAUSE } //resume
+
+enum AudioEvent { PLAY, STOP, RESUME, LOOP, NOTLOOP , PAUSE }
 enum AudioState { Completed, PLAYING, STOPPED , RESUME, PAUSE }
 enum AudioLoopState{ NOTLOOP , LOOP }
 
@@ -24,6 +25,8 @@ class AudioService extends ChangeNotifier {
   }
 
   /// Use This if you will Loop Audio [ReleaseMode]
+  @e.protected
+  @e.mustCallSuper
   event(AudioEvent mode,{String? file}) async{
     switch (mode) {
       case AudioEvent.PLAY:
