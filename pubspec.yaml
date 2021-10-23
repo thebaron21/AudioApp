@@ -21,6 +21,7 @@ dependencies:
   google_fonts:
   meta:
   font_awesome_flutter:
+  share: ^2.0.4
 
 
   
@@ -29,6 +30,12 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  change_app_package_name:
+  flutter_launcher_icons:
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/app_icon.png"
 
 # The following section is specific to Flutter.
 flutter:

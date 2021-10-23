@@ -2,5 +2,5 @@
 import 'package:flutter/material.dart';
 
 class GetColors{
-  static const Color mainColor =  Colors.teal;
+  static const Color mainColor =  Color(0xFF1c4284);
 }
