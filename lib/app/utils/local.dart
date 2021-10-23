@@ -1,10 +1,10 @@
 import 'package:test_getx/app/models/Audio.dart';
-import 'package:test_getx/generated/assets.dart';
+import 'package:test_getx/app/utils/assets.dart';
 
 List<Audio> api = [
   Audio(
     id: "1",
-    tutorialName: "التمسك بما كان عليه أصحاب رسول الله صلى الله عليه وسلم",
+    tutorialName: "التمسك بما كان عليه أصحاب الرسول ﷺ",
     path: Assets.audios1,
   ),
   Audio(
